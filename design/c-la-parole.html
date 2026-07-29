@@ -24,25 +24,25 @@ body {
 }
 .page { max-width: 52rem; margin: 0 auto; }
 
-.entete { margin: 0 0 1.5rem; }
+.entete { margin: 0 0 1.1rem; }
 .entete p { margin: 0; font-size: 0.95rem; line-height: 1.45; color: var(--gris); }
 .entete .qui { color: var(--encre); }
 
-.propos { margin: 0 0 1.4rem; }
+.propos { margin: 0 0 1.1rem; }
 .propos p { margin: 0 0 1rem; }
 .propos p:last-child { margin: 0; }
 a { color: var(--encre); text-underline-offset: 3px; }
 
-.joindre { margin: 0 0 2rem; }
+.joindre { margin: 0 0 1.5rem; }
 .joindre p { margin: 0 0 0.8rem; }
 .coord { margin: 0; line-height: 1.7; font-size: 0.97rem; }
 .coord .tel { margin-right: 1.75rem; }
 
-.demande { margin: 0 0 1.75rem; }
-.demande:last-of-type { margin-bottom: 1.5rem; }
+.demande { margin: 0 0 1.35rem; }
+.demande:last-of-type { margin-bottom: 1.2rem; }
 .demande > label {
   display: block;
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.45rem;
   font-style: italic;
   font-size: 1.12rem;
   line-height: 1.45;
@@ -55,12 +55,13 @@ a { color: var(--encre); text-underline-offset: 3px; }
   grid-template-columns: 5.25rem minmax(0, 1fr);
   align-items: center;
   gap: 0 0.75rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.45rem;
 }
 .ligne > label { margin-bottom: 0; font-size: 0.95rem; }
 .ligne > input { font-size: 1rem; }
 .ligne > .message-erreur { grid-column: 2; }
-.groupe { margin-bottom: 1.5rem; }
+.groupe { margin-bottom: 1.2rem; }
+.duo > .ligne:last-child { margin-bottom: 0; }
 
 input[type="text"], input[type="tel"], input[type="email"], textarea {
   display: block;
@@ -76,8 +77,9 @@ input[type="text"], input[type="tel"], input[type="email"], textarea {
   font-size: 1.1rem;
 }
 textarea {
-  min-height: calc(2.1em * 3);
-  resize: vertical;
+  min-height: 0;
+  resize: none;
+  overflow-y: hidden;
   line-height: 2.1;
   background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(2.1em - 1px), var(--trait) calc(2.1em - 1px), var(--trait) 2.1em);
   border-bottom: 0;
@@ -91,7 +93,7 @@ textarea:focus { box-shadow: inset 0 -2px 0 var(--encre); }
 .message-erreur { display: none; margin: 0.6rem 0 0; color: var(--erreur); font-size: 0.9rem; font-style: normal; }
 .champ-invalide .message-erreur { display: block; }
 
-.regle { margin: 0 0 1.5rem; font-size: 0.97rem; line-height: 1.6; color: var(--gris); }
+.regle { margin: 0 0 1.1rem; font-size: 0.97rem; line-height: 1.6; color: var(--gris); }
 .regle p { margin: 0 0 0.85rem; }
 .regle p:last-child { margin: 0; }
 
@@ -102,7 +104,7 @@ textarea:focus { box-shadow: inset 0 -2px 0 var(--encre); }
 .honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 button {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   width: 100%;
   min-height: 52px;
   padding: 0.9rem 2.25rem;
@@ -135,7 +137,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
 #confirmation p { margin: 0 0 1.1rem; }
 #confirmation p:last-child { margin: 0; }
 
-.signature { margin: 2.75rem 0 0; font-style: italic; color: var(--gris); }
+.signature { margin: 2rem 0 0; font-style: italic; color: var(--gris); }
 
 @media (min-width: 700px) {
   body { padding: 3rem 2rem 4rem; }
@@ -143,6 +145,8 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
   .ligne { grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0 1rem; }
   .ligne > label { font-size: 1rem; }
   .ligne > input { font-size: 1.1rem; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2.5rem; }
+  .duo > .ligne { margin-bottom: 0; }
 }
 @media (prefers-reduced-motion: reduce) { button { transition: none; } }
 </style>
@@ -168,6 +172,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
 
 <div class="groupe">
 
+<div class="duo">
 <div class="ligne champ">
 <label for="nom">Nom</label>
 <input type="text" id="nom" name="nom" autocomplete="family-name" required>
@@ -179,7 +184,9 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
 <input type="text" id="prenom" name="prenom" autocomplete="given-name" required>
 <p class="message-erreur" id="erreur-prenom"></p>
 </div>
+</div>
 
+<div class="duo">
 <div class="ligne champ">
 <label for="telephone">Téléphone</label>
 <input type="tel" id="telephone" name="telephone" autocomplete="tel" required>
@@ -190,6 +197,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
 <label for="email">Mail</label>
 <input type="email" id="email" name="email" autocomplete="email" required>
 <p class="message-erreur" id="erreur-email"></p>
+</div>
 </div>
 
 </div>
@@ -206,18 +214,17 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
 
 <div class="demande champ">
 <label for="disponibilites">Je consulte les jeudis et vendredis. Sur quels horaires êtes-vous libre ces jours-là pour que je vous contacte dès qu’un créneau qui correspond à vos disponibilités se libère ?</label>
-<textarea id="disponibilites" name="disponibilites" required></textarea>
+<textarea id="disponibilites" name="disponibilites" rows="1" required></textarea>
 <p class="message-erreur" id="erreur-disponibilites"></p>
 </div>
 
 <div class="demande champ">
 <label for="raison">Souhaitez-vous me partager la raison de votre désir de prendre rdv <span class="optionnel">(optionnel)</span></label>
-<textarea id="raison" name="raison"></textarea>
+<textarea id="raison" name="raison" rows="1"></textarea>
 </div>
 
 <div class="regle">
-<p>Avez-vous bien lu que la 1<sup>re</sup> séance ou les 1<sup>res</sup> séances sont au cabinet à Paris puis que le suivi est en visio ? Bien sûr il s’agit d’essayer et de voir si cela vous convient. Je n’habite pas toute l’année à Paris, mais j’y reviens régulièrement pour mes consultations, donc nous pourrons faire des séances au cabinet ponctuellement. Si vous habitez loin de Paris ou si vous ne pouvez pas vous déplacer, nous pouvons tout faire en visio même la première séance.</p>
-<p>Par ailleurs, la fréquence des psychothérapies que je propose est d’un rdv par semaine.</p>
+<p>Avez-vous bien lu que la 1<sup>re</sup> séance ou les 1<sup>res</sup> séances sont au cabinet à Paris puis que le suivi est en visio ? Bien sûr il s’agit d’essayer et de voir si cela vous convient. Je n’habite pas toute l’année à Paris, mais j’y reviens régulièrement pour mes consultations, donc nous pourrons faire des séances au cabinet ponctuellement. Si vous habitez loin de Paris ou si vous ne pouvez pas vous déplacer, nous pouvons tout faire en visio même la première séance. Par ailleurs, la fréquence des psychothérapies que je propose est d’un rdv par semaine.</p>
 </div>
 
 <div class="champ">
@@ -306,6 +313,16 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
     confirmation.focus();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+  function ajusterHauteur(zone) {
+    zone.style.height = 'auto';
+    zone.style.height = zone.scrollHeight + 'px';
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('textarea'), function (zone) {
+    zone.rows = 1;
+    ajusterHauteur(zone);
+    zone.addEventListener('input', function () { ajusterHauteur(zone); });
+  });
+
   formulaire.addEventListener('submit', function (evenement) {
     evenement.preventDefault();
     encartErreur.style.display = 'none';
