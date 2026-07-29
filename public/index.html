@@ -159,7 +159,7 @@ button:disabled { opacity: 0.55; cursor: progress; }
 <h1>Liste d’attente</h1>
 <p class="sous-titre">Julie Vasquez, psychologue</p>
 
-<p>Merci pour votre demande de rendez-vous. Actuellement, mon agenda est complet et le délai d’attente pour un premier rendez-vous est d’environ 2 mois. Si vous souhaitez être inscrit(e) sur la liste d’attente, merci de compléter ce formulaire qui me permettra de vous recontacter au plus vite pour vous proposer un rdv correspondant à vos disponibilités.</p>
+<p id="accueil">Merci pour votre demande de rendez-vous. Actuellement, mon agenda est complet et le délai d’attente pour un premier rendez-vous est d’environ 2 mois. Si vous souhaitez être inscrit(e) sur la liste d’attente, merci de compléter ce formulaire qui me permettra de vous recontacter au plus vite pour vous proposer un rdv correspondant à vos disponibilités.</p>
 
 <div class="encart">
 <p>Si vous souhaitez échanger par téléphone avant de vous inscrire sur liste d’attente ou avant un premier rendez-vous, je suis joignable par téléphone <strong>tous les lundis de 11&nbsp;h à 21&nbsp;h</strong>. C’est un temps que je réserve aux appels, donc n’hésitez pas à me contacter sur ce créneau si vous en ressentez le besoin. Vous pouvez aussi m’envoyer un mail.</p>
@@ -254,5 +254,123 @@ button:disabled { opacity: 0.55; cursor: progress; }
 <p class="signature">À bientôt,<br>Julie Vasquez</p>
 
 </main>
+
+<script>
+(function () {
+  'use strict';
+
+  var URL_SCRIPT = 'https://script.google.com/macros/s/AKfycbxsu2053o1J8N6T9e8aYq8gSKRqs8kNC7iaPw4IEz5pYL65ofckrxC9-V4G-6emzloP/exec';
+
+  var LIBELLE_BOUTON = 'M’inscrire sur la liste d’attente';
+
+  var MESSAGES = {
+    nom: 'Merci d’indiquer votre nom.',
+    prenom: 'Merci d’indiquer votre prénom.',
+    telephone: 'Merci d’indiquer un numéro de téléphone.',
+    email: 'Merci d’indiquer une adresse mail valide.',
+    disponibilites: 'Merci d’indiquer vos disponibilités les jeudis et vendredis.',
+    fonctionnementLu: 'Merci de confirmer que vous avez pris connaissance de ce fonctionnement.',
+  };
+
+  var formulaire = document.getElementById('formulaire');
+  var bouton = document.getElementById('envoyer');
+  var encartErreur = document.getElementById('erreur-envoi');
+  var confirmation = document.getElementById('confirmation');
+
+  function marquerValide(nom) {
+    var champ = document.getElementById(nom);
+    champ.closest('.champ').classList.remove('champ-invalide');
+    champ.removeAttribute('aria-invalid');
+  }
+
+  function marquerInvalide(nom) {
+    var champ = document.getElementById(nom);
+    champ.closest('.champ').classList.add('champ-invalide');
+    champ.setAttribute('aria-invalid', 'true');
+    document.getElementById('erreur-' + nom).textContent = MESSAGES[nom];
+  }
+
+  function valider() {
+    var premierFautif = null;
+    Object.keys(MESSAGES).forEach(function (nom) {
+      var champ = document.getElementById(nom);
+      if (champ.checkValidity()) {
+        marquerValide(nom);
+      } else {
+        marquerInvalide(nom);
+        if (!premierFautif) premierFautif = champ;
+      }
+    });
+    if (premierFautif) {
+      premierFautif.focus();
+      return false;
+    }
+    return true;
+  }
+
+  function collecter() {
+    var lire = function (nom) {
+      return document.getElementById(nom).value.trim();
+    };
+    return {
+      nom: lire('nom'),
+      prenom: lire('prenom'),
+      telephone: lire('telephone'),
+      email: lire('email'),
+      orientePar: lire('orientePar'),
+      disponibilites: lire('disponibilites'),
+      raison: lire('raison'),
+      fonctionnementLu: document.getElementById('fonctionnementLu').checked,
+      site: lire('site'),
+    };
+  }
+
+  function afficherErreurEnvoi() {
+    encartErreur.querySelector('p').innerHTML =
+      'Votre inscription n’a pas pu être envoyée. Vos réponses sont conservées : ' +
+      'réessayez dans un instant, ou écrivez-moi directement à ' +
+      '<a href="mailto:julievasquez.psychologue@gmail.com">julievasquez.psychologue@gmail.com</a>.';
+    encartErreur.style.display = 'block';
+  }
+
+  function afficherConfirmation() {
+    formulaire.style.display = 'none';
+    document.getElementById('accueil').style.display = 'none';
+    confirmation.style.display = 'block';
+    confirmation.focus();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  formulaire.addEventListener('submit', function (evenement) {
+    evenement.preventDefault();
+    encartErreur.style.display = 'none';
+    if (!valider()) return;
+
+    bouton.disabled = true;
+    bouton.textContent = 'Envoi en cours…';
+
+    fetch(URL_SCRIPT, {
+      method: 'POST',
+      redirect: 'follow',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(collecter()),
+    })
+      .then(function (reponse) {
+        return reponse.json();
+      })
+      .then(function (resultat) {
+        if (!resultat.ok) throw new Error(resultat.erreur || 'refus du serveur');
+        afficherConfirmation();
+      })
+      .catch(function (err) {
+        console.error(err);
+        afficherErreurEnvoi();
+        bouton.disabled = false;
+        bouton.textContent = LIBELLE_BOUTON;
+      });
+  });
+})();
+</script>
+
 </body>
 </html>

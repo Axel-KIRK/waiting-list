@@ -116,7 +116,7 @@ a { color: var(--accent-fonce); }
 <h1>Liste d'attente</h1>
 <p class="sous-titre">Julie Vasquez, psychologue</p>
 
-<p>Merci pour votre demande de rendez-vous. Actuellement, mon agenda est complet et le délai d'attente pour un premier rendez-vous est d'environ 2 mois. Si vous souhaitez être inscrit(e) sur la liste d'attente, merci de compléter ce formulaire qui me permettra de vous recontacter au plus vite pour vous proposer un rdv correspondant à vos disponibilités.</p>
+<p id="accueil">Merci pour votre demande de rendez-vous. Actuellement, mon agenda est complet et le délai d'attente pour un premier rendez-vous est d'environ 2 mois. Si vous souhaitez être inscrit(e) sur la liste d'attente, merci de compléter ce formulaire qui me permettra de vous recontacter au plus vite pour vous proposer un rdv correspondant à vos disponibilités.</p>
 
 <div class="encart">
 <p>Si vous souhaitez échanger par téléphone avant de vous inscrire sur liste d'attente ou avant un premier rendez-vous, je suis joignable par téléphone <strong>tous les lundis de 11 h à 21 h</strong>. C'est un temps que je réserve aux appels, donc n'hésitez pas à me contacter sur ce créneau si vous en ressentez le besoin. Vous pouvez aussi m'envoyer un mail.</p>
@@ -637,6 +637,8 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 
 Note sur `novalidate` : il est posé sur le `<form>` en tâche 2 pour désactiver les bulles natives du navigateur, tout en gardant les attributs `required` et `type` pour la sémantique et les lecteurs d'écran. La validation passe par `champ.checkValidity()`, ce qui permet d'afficher nos propres messages sous les champs.
 
+`afficherConfirmation` masque aussi le paragraphe d'accueil : sans cela, la page continue d'afficher « merci de compléter ce formulaire qui me permettra de vous recontacter » juste au-dessus de la confirmation d'envoi. Après envoi il ne doit rester que le titre, les coordonnées, la confirmation et la signature.
+
 - [ ] **Step 1: Écrire le script de la page**
 
 ```html
@@ -720,6 +722,7 @@ Note sur `novalidate` : il est posé sur le `<form>` en tâche 2 pour désactive
 
   function afficherConfirmation() {
     formulaire.style.display = 'none';
+    document.getElementById('accueil').style.display = 'none';
     confirmation.style.display = 'block';
     confirmation.focus();
     window.scrollTo({ top: 0, behavior: 'smooth' });
