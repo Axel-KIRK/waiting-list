@@ -82,6 +82,14 @@ function reponse(objet) {
   );
 }
 
+function afficherFeuilleCible() {
+  var classeur = SpreadsheetApp.getActiveSpreadsheet();
+  console.log('Classeur : ' + classeur.getName());
+  console.log('URL      : ' + classeur.getUrl());
+  console.log('Onglet   : ' + NOM_FEUILLE);
+  console.log('Lignes   : ' + (feuille().getLastRow() - 1) + ' inscription(s), en-têtes exclues');
+}
+
 function testDoPost() {
   var complet = {
     nom: 'Testeur',

@@ -24,6 +24,18 @@ Ouvrir la feuille Google « Liste d'attente », onglet `Inscriptions`. Une ligne
 par personne, la plus récente en bas. Les colonnes sont figées et le téléphone
 est stocké en texte pour préserver son zéro initial.
 
+### Quelle feuille reçoit les données ?
+
+Celle à laquelle le script est rattaché — le classeur depuis lequel on a ouvert
+**Extensions → Apps Script**. Le script est *lié au conteneur* :
+`SpreadsheetApp.getActiveSpreadsheet()` renvoie ce classeur, jamais un autre.
+L'URL inscrite dans la page désigne le script, pas la feuille.
+
+Pour en avoir la confirmation, exécuter `afficherFeuilleCible` depuis l'éditeur
+Apps Script : elle affiche le nom du classeur, son URL et le nombre
+d'inscriptions. Cette fonction ne nécessite aucun redéploiement, elle s'exécute
+depuis l'éditeur.
+
 ## Modifier le texte de la page
 
 Tout le contenu est en clair dans `public/index.html`, dans les balises `<p>` et
@@ -39,27 +51,27 @@ Puis ouvrir http://localhost:8080.
 
 ## Redéployer la page
 
-Le site est servi par un Worker Cloudflare nommé `waitinglist`, branché sur ce
-dépôt : chaque push sur `main` déclenche un déploiement.
+Le site est servi par un projet Cloudflare **Pages** nommé `waiting-list-4ya`,
+branché sur ce dépôt : chaque push sur `main` déclenche un déploiement.
 
-URL de production : https://waitinglist.mackirk-dev.workers.dev
+URL de production : https://waiting-list-4ya.pages.dev
 
 Pour déployer à la main :
 
 ```bash
-npx wrangler deploy
+npx wrangler pages deploy
 ```
 
 La première fois, il faut s'authentifier avec `npx wrangler login`.
 
-Deux points à ne pas confondre dans `wrangler.toml` :
+Deux pièges de configuration rencontrés, à ne pas reproduire :
 
-- Le bloc `[assets]` est ce qui fait servir `public/` par le Worker. La clé
-  `pages_build_output_dir` s'adresse à Cloudflare **Pages**, un autre produit :
-  sur un Worker elle est ignorée, et Cloudflare déploie alors son Worker par
-  défaut, qui répond « Hello world ».
-- Le `name` doit correspondre au nom réel du Worker. S'ils diffèrent, un
-  déploiement en ligne de commande crée un second Worker au lieu de mettre à
+- `pages_build_output_dir` s'adresse à **Pages**. Un **Worker** attend un bloc
+  `[assets]` — produits différents, clés différentes. Utiliser la clé Pages sur
+  un Worker fait déployer le Worker par défaut de Cloudflare, qui répond
+  « Hello world » à la place du site.
+- Le `name` doit correspondre au nom réel du projet. S'ils diffèrent, un
+  déploiement en ligne de commande crée un second projet au lieu de mettre à
   jour le bon.
 
 ## Modifier le script Google
