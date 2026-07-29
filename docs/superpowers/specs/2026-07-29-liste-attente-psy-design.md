@@ -29,8 +29,8 @@ Trois pièces, aucune étape de build, aucune dépendance npm.
 
 | Pièce | Rôle |
 |---|---|
-| `index.html` | Page publique unique. HTML + CSS + JS dans un seul fichier. Fichier statique, déployable par simple copie. |
-| `Code.gs` | Google Apps Script lié à la feuille, déployé en Web App « Exécuter en tant que moi / Accessible à tous ». Reçoit le POST, ajoute une ligne. |
+| `public/index.html` | Page publique unique. HTML + CSS + JS dans un seul fichier. `public/` est la racine publiée sur Cloudflare Pages, ce qui garde le spec et le script hors du site. |
+| `apps-script/Code.gs` | Google Apps Script lié à la feuille, déployé en Web App « Exécuter en tant que moi / Accessible à tous ». Reçoit le POST, ajoute une ligne. Jamais publié sur le web. |
 | Feuille Google | Base de données et backoffice. Partagée en lecture au cabinet. |
 
 ### Flux nominal
@@ -89,7 +89,7 @@ Texte fourni par la praticienne, repris sans réécriture. Ordre des blocs sur l
 
 > Si vous souhaitez échanger par téléphone avant de vous inscrire sur liste d'attente ou avant un premier rendez-vous, je suis joignable par téléphone tous les lundis de 11 h à 21 h. C'est un temps que je réserve aux appels, donc n'hésitez pas à me contacter sur ce créneau si vous en ressentez le besoin. Vous pouvez aussi m'envoyer un mail.
 
-Le téléphone et l'email sont affichés ici comme liens `tel:` et `mailto:`.
+Le téléphone et l'email sont affichés ici comme liens cliquables : `06 60 61 09 08` pointant vers `tel:+33660610908`, et l'adresse mail vers `mailto:`.
 
 **3. Le formulaire** (champs 1 à 7 du tableau ci-dessus)
 
@@ -103,9 +103,9 @@ Le téléphone et l'email sont affichés ici comme liens `tel:` et `mailto:`.
 
 **6. Écran de confirmation** (remplace le formulaire après envoi) : confirmation de l'inscription, rappel du délai d'environ deux mois, rappel du créneau téléphonique du lundi.
 
-### Placeholders bloquants
+### Placeholder bloquant
 
-Le téléphone et l'email réels ne sont pas encore fournis. Ils apparaissent dans le code sous la forme littérale `{{TELEPHONE}}` et `{{EMAIL}}`. **La mise en ligne est bloquée tant que ces deux jetons subsistent dans `index.html`** ; une recherche des accolades doubles dans le fichier doit ne rien retourner avant déploiement.
+Le téléphone est fourni : `06 60 61 09 08`. L'adresse mail ne l'est pas encore et apparaît dans le code sous la forme littérale `{{EMAIL}}`. **La mise en ligne est bloquée tant que ce jeton subsiste dans `index.html`** ; une recherche des accolades doubles dans le fichier doit ne rien retourner avant déploiement. Même contrainte pour `{{URL_APPS_SCRIPT}}`, renseignée après le déploiement du script.
 
 ## Validation
 
@@ -140,9 +140,9 @@ Aucun framework de test — le projet n'en justifie pas. Vérification manuelle 
 
 ## Déploiement
 
-**Feuille et script** (à faire par le commanditaire, procédure fournie pas à pas) : créer la feuille, ouvrir Extensions → Apps Script, coller `Code.gs`, déployer en Web App (« Exécuter en tant que : moi », « Accès : tout le monde »), récupérer l'URL et la coller dans `index.html`. Toute modification du script exige un **nouveau déploiement** pour prendre effet — piège classique.
+**Feuille et script** (à faire par le commanditaire, procédure fournie pas à pas) : créer la feuille, ouvrir Extensions → Apps Script, coller `Code.gs`, déployer en Web App (« Exécuter en tant que : moi », « Accès : tout le monde »), récupérer l'URL et la coller dans `index.html` à la place de `{{URL_APPS_SCRIPT}}`. Toute modification du script exige un **nouveau déploiement** pour prendre effet — piège classique.
 
-**Page** : `index.html` est un fichier statique, déployable par copie sur l'hébergeur du domaine déjà acheté (dont le nom et l'hébergeur restent à préciser au moment de la mise en ligne — cela n'a aucun impact sur le code).
+**Page** : Cloudflare Pages, dossier publié `public/`, via `npx wrangler pages deploy public`. Cible souhaitée `list.pages.dev`. Les sous-domaines `*.pages.dev` sont uniques à l'échelle de Cloudflare et `list` est un nom très court, donc probablement déjà pris : repli prévu sur `liste-attente-jv.pages.dev`. Pas de domaine personnalisé pour l'instant ; en brancher un plus tard ne touche pas au code.
 
 ## Limites assumées
 
