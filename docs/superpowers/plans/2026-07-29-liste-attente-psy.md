@@ -152,10 +152,10 @@ Attendu : les quatre points passent. Si les accents sont cassés, c'est que le f
 - [ ] **Step 4: Vérifier que les jetons sont bien encore présents**
 
 ```bash
-grep -c -F '{{EMAIL}}' public/index.html
+grep -o -F '{{EMAIL}}' public/index.html | wc -l | tr -d ' '
 ```
 
-Attendu : `2` — une fois dans le `href` du `mailto:`, une fois dans le texte du lien.
+Attendu : `2` — une fois dans le `href` du `mailto:`, une fois dans le texte du lien. Compter avec `grep -o` et non `grep -c` : les deux jetons sont sur la même ligne, et `-c` compte les lignes.
 
 - [ ] **Step 5: Commit**
 
