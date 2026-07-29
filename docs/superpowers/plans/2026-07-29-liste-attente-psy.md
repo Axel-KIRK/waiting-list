@@ -19,7 +19,7 @@ Ces règles s'appliquent à toutes les tâches.
 - Le texte éditorial est repris **verbatim** de la section « Contenu éditorial » du spec. Aucune réécriture, aucune correction de style.
 - Français typographique : accents et cédilles obligatoires, apostrophes courbes (`'`) dans le contenu affiché, espace insécable avant `?` et `:` là où le spec en met.
 - Le POST part obligatoirement en `Content-Type: text/plain;charset=utf-8` avec `redirect: "follow"`. **Jamais** `mode: "no-cors"` : la réponse deviendrait illisible.
-- Téléphone affiché : `06 60 61 09 08`, lien `tel:+33660610908`.
+- Téléphone affiché : `07 62 02 23 16`, lien `tel:+33762022316`.
 - Deux jetons littéraux restent dans le code jusqu'à la tâche 5 : `{{EMAIL}}` et `{{URL_APPS_SCRIPT}}`. La mise en ligne est bloquée tant que `grep -F '{{' public/index.html` retourne quelque chose.
 - Mobile-first : aucun débordement horizontal à 375px de large, cibles tactiles de 44px minimum, taille de corps 17px minimum.
 - Hors périmètre, ne rien ajouter : bandeau cookies, mention RGPD, email automatique, page d'administration, analytics, détection de doublons.
@@ -120,7 +120,7 @@ a { color: var(--accent-fonce); }
 
 <div class="encart">
 <p>Si vous souhaitez échanger par téléphone avant de vous inscrire sur liste d'attente ou avant un premier rendez-vous, je suis joignable par téléphone <strong>tous les lundis de 11 h à 21 h</strong>. C'est un temps que je réserve aux appels, donc n'hésitez pas à me contacter sur ce créneau si vous en ressentez le besoin. Vous pouvez aussi m'envoyer un mail.</p>
-<p><a href="tel:+33660610908">06 60 61 09 08</a> — <a href="mailto:{{EMAIL}}">{{EMAIL}}</a></p>
+<p><a href="tel:+33762022316">07 62 02 23 16</a> — <a href="mailto:{{EMAIL}}">{{EMAIL}}</a></p>
 </div>
 
 <p class="signature">À bientôt,<br>Julie Vasquez</p>
@@ -144,7 +144,7 @@ Ouvrir la page dans un navigateur redimensionné à 375px et contrôler les quat
 
 1. Aucune barre de défilement horizontale.
 2. Le titre, le paragraphe d'accueil, l'encart et la signature apparaissent dans cet ordre.
-3. Le numéro `06 60 61 09 08` est cliquable.
+3. Le numéro `07 62 02 23 16` est cliquable.
 4. Tous les accents s'affichent correctement (« délai », « à bientôt », « créneau »), pas de losange noir ni de `Ã©`.
 
 Attendu : les quatre points passent. Si les accents sont cassés, c'est que le fichier n'est pas enregistré en UTF-8.
@@ -201,7 +201,8 @@ legend {
   font-weight: 600;
   font-size: 0.97rem;
 }
-.optionnel { font-weight: 400; color: var(--texte-doux); }
+.champ > label.libelle-long { font-weight: 400; font-size: 1em; }
+.optionnel { color: var(--texte-doux); }
 input[type="text"], input[type="tel"], input[type="email"], textarea {
   width: 100%;
   min-height: 44px;
@@ -249,7 +250,10 @@ button {
   border: 0;
   border-radius: 6px;
   color: #fff;
-  font: 600 1.05rem/1 inherit;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.2;
   cursor: pointer;
 }
 button:hover:not(:disabled) { background: var(--accent-fonce); }
@@ -281,6 +285,11 @@ button:disabled { opacity: 0.55; cursor: progress; }
   button { width: auto; min-width: 220px; }
 }
 ```
+
+Deux choix de style à ne pas défaire :
+
+- **Ne jamais utiliser le raccourci `font:` avec `inherit` comme famille** (`font: 600 1.05rem/1 inherit`). C'est invalide, et le navigateur rejette la déclaration *entière* : le bouton retombe alors sur le défaut du moteur, Arial 13,3px poids 400. Toujours passer par `font-family: inherit` et les propriétés séparées.
+- `.libelle-long` sur les trois libellés qui font plusieurs lignes. Un libellé de quatre lignes se lit comme une question, pas comme une étiquette : poids normal et taille du corps (`1em` = 17px, alors que `1rem` en vaudrait 16 puisque `rem` se réfère à la racine et non au `body`).
 
 - [ ] **Step 2: Ajouter le balisage du formulaire**
 
@@ -318,7 +327,7 @@ Le bloc « fonctionnement » est placé juste avant la case à cocher, conformé
 </div>
 
 <div class="champ">
-<label for="orientePar">Si vous avez été orienté par un professionnel, une association, un réseau, merci de l'indiquer <span class="optionnel">(facultatif)</span></label>
+<label class="libelle-long" for="orientePar">Si vous avez été orienté par un professionnel, une association, un réseau, merci de l'indiquer <span class="optionnel">(facultatif)</span></label>
 <input type="text" id="orientePar" name="orientePar">
 </div>
 
@@ -333,13 +342,13 @@ Le bloc « fonctionnement » est placé juste avant la case à cocher, conformé
 <legend>Vos disponibilités</legend>
 
 <div class="champ">
-<label for="disponibilites">Je consulte les jeudis et vendredis. Sur quels horaires êtes-vous libre ces jours-là pour que je vous contacte dès qu'un créneau qui correspond à vos disponibilités se libère ?</label>
+<label class="libelle-long" for="disponibilites">Je consulte les jeudis et vendredis. Sur quels horaires êtes-vous libre ces jours-là pour que je vous contacte dès qu'un créneau qui correspond à vos disponibilités se libère ?</label>
 <textarea id="disponibilites" name="disponibilites" required></textarea>
 <p class="message-erreur" id="erreur-disponibilites"></p>
 </div>
 
 <div class="champ">
-<label for="raison">Souhaitez-vous me partager la raison de votre désir de prendre rdv <span class="optionnel">(optionnel)</span></label>
+<label class="libelle-long" for="raison">Souhaitez-vous me partager la raison de votre désir de prendre rdv <span class="optionnel">(optionnel)</span></label>
 <textarea id="raison" name="raison"></textarea>
 </div>
 
@@ -371,7 +380,7 @@ Le bloc « fonctionnement » est placé juste avant la case à cocher, conformé
 <div id="confirmation" role="status" tabindex="-1">
 <h2>Votre inscription est enregistrée</h2>
 <p>Merci. Je vous recontacterai dès qu'un créneau correspondant à vos disponibilités se libère. Le délai est actuellement d'environ 2 mois.</p>
-<p>Si vous souhaitez échanger avant, je suis joignable au <a href="tel:+33660610908">06 60 61 09 08</a> tous les lundis de 11 h à 21 h.</p>
+<p>Si vous souhaitez échanger avant, je suis joignable au <a href="tel:+33762022316">07 62 02 23 16</a> tous les lundis de 11 h à 21 h.</p>
 </div>
 ```
 
@@ -828,7 +837,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 - Consumes: l'URL du Web App de la tâche 3, la page complète de la tâche 4, l'adresse mail fournie par le commanditaire.
 - Produces: un site en ligne et sa documentation.
 
-⚠️ Cette tâche est bloquée jusqu'à ce que l'adresse mail à afficher soit fournie. Le téléphone est connu (`06 60 61 09 08`), l'adresse mail ne l'est pas.
+⚠️ Cette tâche est bloquée jusqu'à ce que l'adresse mail à afficher soit fournie. Le téléphone est connu (`07 62 02 23 16`), l'adresse mail ne l'est pas.
 
 - [ ] **Step 1: Remplacer les deux jetons**
 

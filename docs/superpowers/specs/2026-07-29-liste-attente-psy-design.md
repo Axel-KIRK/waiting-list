@@ -89,7 +89,7 @@ Texte fourni par la praticienne, repris sans réécriture. Ordre des blocs sur l
 
 > Si vous souhaitez échanger par téléphone avant de vous inscrire sur liste d'attente ou avant un premier rendez-vous, je suis joignable par téléphone tous les lundis de 11 h à 21 h. C'est un temps que je réserve aux appels, donc n'hésitez pas à me contacter sur ce créneau si vous en ressentez le besoin. Vous pouvez aussi m'envoyer un mail.
 
-Le téléphone et l'email sont affichés ici comme liens cliquables : `06 60 61 09 08` pointant vers `tel:+33660610908`, et l'adresse mail vers `mailto:`.
+Le téléphone et l'email sont affichés ici comme liens cliquables : `07 62 02 23 16` pointant vers `tel:+33762022316`, et `julievasquez.psychologue@gmail.com` vers `mailto:`.
 
 **3. Le formulaire** (champs 1 à 7 du tableau ci-dessus)
 
@@ -105,7 +105,7 @@ Le téléphone et l'email sont affichés ici comme liens cliquables : `06 60 61 
 
 ### Placeholder bloquant
 
-Le téléphone est fourni : `06 60 61 09 08`. L'adresse mail ne l'est pas encore et apparaît dans le code sous la forme littérale `{{EMAIL}}`. **La mise en ligne est bloquée tant que ce jeton subsiste dans `index.html`** ; une recherche des accolades doubles dans le fichier doit ne rien retourner avant déploiement. Même contrainte pour `{{URL_APPS_SCRIPT}}`, renseignée après le déploiement du script.
+Les deux coordonnées sont fournies et intégrées : téléphone `07 62 02 23 16`, mail `julievasquez.psychologue@gmail.com`. Il ne reste qu'un jeton, `{{URL_APPS_SCRIPT}}`, renseigné après le déploiement du script. **La mise en ligne est bloquée tant qu'une recherche d'accolades doubles dans `index.html` retourne quelque chose.**
 
 ## Validation
 

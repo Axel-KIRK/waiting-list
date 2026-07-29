@@ -52,9 +52,104 @@ a { color: var(--accent-fonce); }
   color: var(--texte-doux);
   font: 400 1.05rem/1.5 ui-serif, Georgia, "Times New Roman", serif;
 }
+form { margin: 0; }
+fieldset { border: 0; margin: 0; padding: 0; }
+legend {
+  font: 400 1.25rem/1.3 ui-serif, Georgia, "Times New Roman", serif;
+  padding: 0;
+  margin-bottom: 1.25rem;
+}
+.champ { margin-bottom: 1.6rem; }
+.champ > label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-weight: 600;
+  font-size: 0.97rem;
+}
+.champ > label.libelle-long { font-weight: 400; font-size: 1em; }
+.optionnel { color: var(--texte-doux); }
+input[type="text"], input[type="tel"], input[type="email"], textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.65rem 0.75rem;
+  background: #fff;
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+  color: var(--texte);
+  font: inherit;
+}
+textarea { min-height: 96px; resize: vertical; }
+input:focus-visible, textarea:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.champ-invalide input, .champ-invalide textarea { border-color: var(--erreur); }
+.message-erreur {
+  display: none;
+  margin: 0.4rem 0 0;
+  color: var(--erreur);
+  font-size: 0.9rem;
+}
+.champ-invalide .message-erreur { display: block; }
+.case { display: flex; gap: 0.7rem; align-items: flex-start; }
+.case input {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  accent-color: var(--accent);
+}
+.case label { font-weight: 600; font-size: 0.97rem; }
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+button {
+  width: 100%;
+  min-height: 50px;
+  padding: 0.8rem 1.5rem;
+  background: var(--accent);
+  border: 0;
+  border-radius: 6px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+button:hover:not(:disabled) { background: var(--accent-fonce); }
+button:disabled { opacity: 0.55; cursor: progress; }
+#erreur-envoi {
+  display: none;
+  margin-bottom: 1.25rem;
+  padding: 0.9rem 1rem;
+  background: #fdf1ef;
+  border-left: 3px solid var(--erreur);
+  border-radius: 0 6px 6px 0;
+  color: var(--erreur);
+  font-size: 0.95rem;
+}
+#erreur-envoi p { margin: 0; }
+#confirmation {
+  display: none;
+  padding: 1.5rem;
+  background: var(--fond-encart);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+}
+#confirmation h2 {
+  margin: 0 0 0.75rem;
+  font: 400 1.35rem/1.3 ui-serif, Georgia, "Times New Roman", serif;
+}
+#confirmation p:last-child { margin-bottom: 0; }
 @media (min-width: 700px) {
   body { padding-top: 4rem; }
   h1 { font-size: 2rem; }
+  button { width: auto; min-width: 220px; }
 }
 </style>
 </head>
@@ -68,7 +163,92 @@ a { color: var(--accent-fonce); }
 
 <div class="encart">
 <p>Si vous souhaitez échanger par téléphone avant de vous inscrire sur liste d’attente ou avant un premier rendez-vous, je suis joignable par téléphone <strong>tous les lundis de 11&nbsp;h à 21&nbsp;h</strong>. C’est un temps que je réserve aux appels, donc n’hésitez pas à me contacter sur ce créneau si vous en ressentez le besoin. Vous pouvez aussi m’envoyer un mail.</p>
-<p><a href="tel:+33660610908">06 60 61 09 08</a> — <a href="mailto:{{EMAIL}}">{{EMAIL}}</a></p>
+<p><a href="tel:+33762022316">07 62 02 23 16</a> — <a href="mailto:julievasquez.psychologue@gmail.com">julievasquez.psychologue@gmail.com</a></p>
+</div>
+
+<form id="formulaire" novalidate>
+<fieldset>
+<legend>Vos coordonnées</legend>
+
+<div class="champ">
+<label for="nom">Nom</label>
+<input type="text" id="nom" name="nom" autocomplete="family-name" required>
+<p class="message-erreur" id="erreur-nom"></p>
+</div>
+
+<div class="champ">
+<label for="prenom">Prénom</label>
+<input type="text" id="prenom" name="prenom" autocomplete="given-name" required>
+<p class="message-erreur" id="erreur-prenom"></p>
+</div>
+
+<div class="champ">
+<label for="telephone">Numéro de téléphone</label>
+<input type="tel" id="telephone" name="telephone" autocomplete="tel" required>
+<p class="message-erreur" id="erreur-telephone"></p>
+</div>
+
+<div class="champ">
+<label for="email">Mail</label>
+<input type="email" id="email" name="email" autocomplete="email" required>
+<p class="message-erreur" id="erreur-email"></p>
+</div>
+
+<div class="champ">
+<label class="libelle-long" for="orientePar">Si vous avez été orienté par un professionnel, une association, un réseau, merci de l’indiquer <span class="optionnel">(facultatif)</span></label>
+<input type="text" id="orientePar" name="orientePar">
+</div>
+
+<div class="champ honeypot" aria-hidden="true">
+<label for="site">Site web</label>
+<input type="text" id="site" name="site" tabindex="-1" autocomplete="off">
+</div>
+
+</fieldset>
+
+<fieldset>
+<legend>Vos disponibilités</legend>
+
+<div class="champ">
+<label class="libelle-long" for="disponibilites">Je consulte les jeudis et vendredis. Sur quels horaires êtes-vous libre ces jours-là pour que je vous contacte dès qu’un créneau qui correspond à vos disponibilités se libère ?</label>
+<textarea id="disponibilites" name="disponibilites" required></textarea>
+<p class="message-erreur" id="erreur-disponibilites"></p>
+</div>
+
+<div class="champ">
+<label class="libelle-long" for="raison">Souhaitez-vous me partager la raison de votre désir de prendre rdv <span class="optionnel">(optionnel)</span></label>
+<textarea id="raison" name="raison"></textarea>
+</div>
+
+</fieldset>
+
+<fieldset>
+<legend>Le fonctionnement</legend>
+
+<div class="encart">
+<p>Avez-vous bien lu que la 1<sup>re</sup> séance ou les 1<sup>res</sup> séances sont au cabinet à Paris puis que le suivi est en visio ? Bien sûr il s’agit d’essayer et de voir si cela vous convient. Je n’habite pas toute l’année à Paris, mais j’y reviens régulièrement pour mes consultations, donc nous pourrons faire des séances au cabinet ponctuellement. Si vous habitez loin de Paris ou si vous ne pouvez pas vous déplacer, nous pouvons tout faire en visio même la première séance.</p>
+<p>Par ailleurs, la fréquence des psychothérapies que je propose est d’un rdv par semaine.</p>
+</div>
+
+<div class="champ">
+<div class="case">
+<input type="checkbox" id="fonctionnementLu" name="fonctionnementLu" required>
+<label for="fonctionnementLu">J’ai bien pris connaissance de ce fonctionnement.</label>
+</div>
+<p class="message-erreur" id="erreur-fonctionnementLu"></p>
+</div>
+
+</fieldset>
+
+<div id="erreur-envoi" role="alert"><p></p></div>
+
+<button type="submit" id="envoyer">M’inscrire sur la liste d’attente</button>
+</form>
+
+<div id="confirmation" role="status" tabindex="-1">
+<h2>Votre inscription est enregistrée</h2>
+<p>Merci. Je vous recontacterai dès qu’un créneau correspondant à vos disponibilités se libère. Le délai est actuellement d’environ 2 mois.</p>
+<p>Si vous souhaitez échanger avant, je suis joignable au <a href="tel:+33762022316">07 62 02 23 16</a> tous les lundis de 11&nbsp;h à 21&nbsp;h.</p>
 </div>
 
 <p class="signature">À bientôt,<br>Julie Vasquez</p>
