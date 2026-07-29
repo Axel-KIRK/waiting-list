@@ -20,9 +20,11 @@ variable `URL_SCRIPT` au début du `<script>`.
 
 ## Consulter les inscriptions
 
-Ouvrir la feuille Google « Liste d'attente », onglet `Inscriptions`. Une ligne
-par personne, la plus récente en bas. Les colonnes sont figées et le téléphone
-est stocké en texte pour préserver son zéro initial.
+**[Ouvrir la feuille des inscriptions](https://docs.google.com/spreadsheets/d/1vqsTDq1MgTiwx7BJ23fz-LpYfhxbiUDNEw7LZRdjDAM/edit?gid=379192419#gid=379192419)**
+
+Onglet `Inscriptions`. Une ligne par personne, la plus récente en bas. Les
+colonnes sont figées et le téléphone est stocké en texte pour préserver son zéro
+initial.
 
 ### Quelle feuille reçoit les données ?
 
