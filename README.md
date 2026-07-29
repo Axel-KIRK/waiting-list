@@ -12,7 +12,7 @@ Aucune dépendance, aucune étape de build. Le site est un unique fichier HTML.
 | `public/index.html` | Le site entier : contenu, styles, formulaire, logique d'envoi. C'est le seul fichier publié. |
 | `apps-script/Code.gs` | Le script Google qui reçoit les inscriptions et écrit dans la feuille. |
 | `apps-script/verif-locale.cjs` | Vérifie `Code.gs` sans compte Google, en simulant les API Google. |
-| `wrangler.toml` | Configuration Cloudflare Pages : nom du projet et répertoire publié. |
+| `wrangler.toml` | Configuration du Worker Cloudflare : nom et répertoire d'assets statiques. |
 | `docs/superpowers/` | Spec et plan d'implémentation. |
 
 L'URL du script Google est inscrite en clair dans `public/index.html`, dans la
@@ -39,21 +39,28 @@ Puis ouvrir http://localhost:8080.
 
 ## Redéployer la page
 
-Le déploiement est automatique : Cloudflare Pages est branché sur ce dépôt et
-publie à chaque push sur `main`.
+Le site est servi par un Worker Cloudflare nommé `waitinglist`, branché sur ce
+dépôt : chaque push sur `main` déclenche un déploiement.
+
+URL de production : https://waitinglist.mackirk-dev.workers.dev
 
 Pour déployer à la main :
 
 ```bash
-npx wrangler pages deploy
+npx wrangler deploy
 ```
 
-Pas besoin de `--project-name` ni de chemin : `wrangler.toml` fournit les deux.
 La première fois, il faut s'authentifier avec `npx wrangler login`.
 
-Le `name` de `wrangler.toml` doit correspondre au nom réel du projet Cloudflare.
-S'ils diffèrent, le déploiement en ligne de commande crée un second projet au
-lieu de mettre à jour le bon.
+Deux points à ne pas confondre dans `wrangler.toml` :
+
+- Le bloc `[assets]` est ce qui fait servir `public/` par le Worker. La clé
+  `pages_build_output_dir` s'adresse à Cloudflare **Pages**, un autre produit :
+  sur un Worker elle est ignorée, et Cloudflare déploie alors son Worker par
+  défaut, qui répond « Hello world ».
+- Le `name` doit correspondre au nom réel du Worker. S'ils diffèrent, un
+  déploiement en ligne de commande crée un second Worker au lieu de mettre à
+  jour le bon.
 
 ## Modifier le script Google
 
