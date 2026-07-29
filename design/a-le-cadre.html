@@ -17,49 +17,50 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  padding: 2.5rem 1.5rem 5rem;
+  padding: 2rem 1.25rem 3rem;
   background: var(--papier);
   color: var(--encre);
-  font: 400 17px/1.6 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font: 400 17px/1.55 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
-.page { max-width: 980px; margin: 0 auto; }
+.page { max-width: 52rem; margin: 0 auto; }
 
 .titre {
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.5rem;
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.24em;
   text-transform: uppercase;
 }
 .nom {
-  margin: 0 0 2.5rem;
-  padding-bottom: 2.25rem;
+  margin: 0 0 1.5rem;
+  padding-bottom: 1.25rem;
   border-bottom: 1.5px solid var(--encre);
   font-size: 1rem;
   font-weight: 400;
   color: var(--gris);
 }
 
-.intro { margin: 0 0 2rem; max-width: 42rem; }
-.intro p { margin: 0 0 1.1rem; }
+.intro { margin: 0 0 1.4rem; }
+.intro p { margin: 0 0 1rem; }
 .joindre {
-  margin: 0 0 3rem;
-  padding-left: 1.1rem;
+  margin: 0 0 2rem;
+  padding-left: 1rem;
   border-left: 2px solid var(--signal);
-  max-width: 42rem;
 }
 .joindre p { margin: 0 0 0.6rem; }
 .joindre p:last-child { margin: 0; }
 .coord {
-  font: 400 14px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font: 400 13.5px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
+.coord .sep { color: var(--regle); padding: 0 0.3rem; }
 a { color: var(--signal); text-underline-offset: 3px; }
 
 .serie { border-top: 1px solid var(--regle); }
-.bloc { padding: 2rem 0 0.5rem; border-bottom: 1px solid var(--regle); }
+.bloc { padding: 1.35rem 0 1.1rem; border-bottom: 1px solid var(--regle); }
+.bloc > .champ:last-child { margin-bottom: 0; }
 .bloc:last-of-type { border-bottom: 0; }
 .legende {
-  margin: 0 0 1.5rem;
+  margin: 0 0 1rem;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.22em;
@@ -67,10 +68,21 @@ a { color: var(--signal); text-underline-offset: 3px; }
   color: var(--gris);
 }
 
-.champ { margin-bottom: 1.75rem; }
+.champ { margin-bottom: 1.35rem; }
 .champ > label { display: block; margin-bottom: 0.3rem; font-size: 0.95rem; }
 .champ > label.court { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gris); }
 .optionnel { color: var(--gris); }
+
+.ligne {
+  display: grid;
+  grid-template-columns: 5.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.ligne > label { margin-bottom: 0; }
+.ligne > .message-erreur { grid-column: 2; }
+.groupe { margin-bottom: 0.85rem; }
 
 input[type="text"], input[type="tel"], input[type="email"], textarea {
   width: 100%;
@@ -89,8 +101,8 @@ input:focus, textarea:focus { outline: 0; border-bottom-color: var(--signal); bo
 .message-erreur { display: none; margin: 0.4rem 0 0; color: #a03428; font-size: 0.85rem; }
 .champ-invalide .message-erreur { display: block; }
 
-.regle-lue { margin: 0 0 1.5rem; max-width: 42rem; }
-.regle-lue p { margin: 0 0 1rem; }
+.regle-lue { margin: 0 0 1.25rem; }
+.regle-lue p { margin: 0 0 0.85rem; }
 .case { display: flex; gap: 0.75rem; align-items: flex-start; }
 .case input { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 3px; accent-color: var(--signal); }
 .case label { font-size: 0.95rem; }
@@ -128,7 +140,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
   font-size: 0.95rem;
 }
 #erreur-envoi p { margin: 0; }
-#confirmation { display: none; padding: 2rem 0 0; border-top: 1.5px solid var(--encre); }
+#confirmation { display: none; padding: 1.5rem 0 0; border-top: 1.5px solid var(--encre); }
 #confirmation h2 {
   margin: 0 0 1rem;
   font-size: 0.8rem;
@@ -139,13 +151,12 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
 #confirmation p { margin: 0 0 1rem; max-width: 42rem; }
 #confirmation p:last-child { margin: 0; }
 
-.signature { margin: 3.5rem 0 0; font-size: 0.95rem; color: var(--gris); }
+.signature { margin: 2.25rem 0 0; font-size: 0.95rem; color: var(--gris); }
 
-@media (min-width: 860px) {
-  body { padding-top: 4.5rem; }
-  .colonnes { display: grid; grid-template-columns: 20rem 1fr; gap: 4.5rem; align-items: start; }
-  .aparte { position: sticky; top: 4.5rem; }
+@media (min-width: 700px) {
+  body { padding: 3rem 2rem 4rem; }
   button { width: auto; min-width: 16rem; }
+  .ligne { grid-template-columns: 7rem minmax(0, 1fr); gap: 0 1rem; }
 }
 </style>
 </head>
@@ -155,45 +166,45 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
 <h1 class="titre">Liste d’attente</h1>
 <p class="nom">Julie Vasquez, psychologue</p>
 
-<div class="colonnes">
-<div class="aparte">
 <div class="intro" id="accueil">
 <p>Merci pour votre demande de rendez-vous. Actuellement, mon agenda est complet et le délai d’attente pour un premier rendez-vous est d’environ 2 mois. Si vous souhaitez être inscrit(e) sur la liste d’attente, merci de compléter ce formulaire qui me permettra de vous recontacter au plus vite pour vous proposer un rdv correspondant à vos disponibilités.</p>
 </div>
 <div class="joindre">
 <p>Si vous souhaitez échanger par téléphone avant de vous inscrire sur liste d’attente ou avant un premier rendez-vous, je suis joignable par téléphone tous les lundis de 11&#8239;h à 21&#8239;h. C’est un temps que je réserve aux appels, donc n’hésitez pas à me contacter sur ce créneau si vous en ressentez le besoin. Vous pouvez aussi m’envoyer un mail.</p>
-<p class="coord"><a href="tel:+33762022316">07 62 02 23 16</a><br><a href="mailto:julievasquez.psychologue@gmail.com">julievasquez.psychologue@gmail.com</a></p>
-</div>
+<p class="coord"><a href="tel:+33762022316">07 62 02 23 16</a> <span class="sep">·</span> <a href="mailto:julievasquez.psychologue@gmail.com">julievasquez.psychologue@gmail.com</a></p>
 </div>
 
-<div>
 <form id="formulaire" class="serie" novalidate>
 
 <div class="bloc">
 <p class="legende">Vos coordonnées</p>
 
-<div class="champ">
+<div class="groupe">
+
+<div class="ligne champ">
 <label class="court" for="nom">Nom</label>
 <input type="text" id="nom" name="nom" autocomplete="family-name" required>
 <p class="message-erreur" id="erreur-nom"></p>
 </div>
 
-<div class="champ">
+<div class="ligne champ">
 <label class="court" for="prenom">Prénom</label>
 <input type="text" id="prenom" name="prenom" autocomplete="given-name" required>
 <p class="message-erreur" id="erreur-prenom"></p>
 </div>
 
-<div class="champ">
+<div class="ligne champ">
 <label class="court" for="telephone">Téléphone</label>
 <input type="tel" id="telephone" name="telephone" autocomplete="tel" required>
 <p class="message-erreur" id="erreur-telephone"></p>
 </div>
 
-<div class="champ">
+<div class="ligne champ">
 <label class="court" for="email">Mail</label>
 <input type="email" id="email" name="email" autocomplete="email" required>
 <p class="message-erreur" id="erreur-email"></p>
+</div>
+
 </div>
 
 <div class="champ">
@@ -248,8 +259,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
 <h2>Inscription enregistrée</h2>
 <p>Merci. Je vous recontacterai dès qu’un créneau correspondant à vos disponibilités se libère. Le délai est actuellement d’environ 2 mois.</p>
 <p>Si vous souhaitez échanger avant, je suis joignable au <a href="tel:+33762022316">07 62 02 23 16</a> tous les lundis de 11&#8239;h à 21&#8239;h.</p>
-</div>
-</div>
 </div>
 
 <p class="signature">À bientôt, Julie Vasquez</p>

@@ -22,7 +22,7 @@ body {
   color: var(--encre);
   font: 400 18px/1.6 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
 }
-.page { max-width: 33rem; margin: 0 auto; }
+.page { max-width: 52rem; margin: 0 auto; }
 
 .entete { margin: 0 0 1.5rem; }
 .entete p { margin: 0; font-size: 0.95rem; line-height: 1.45; color: var(--gris); }
@@ -35,7 +35,8 @@ a { color: var(--encre); text-underline-offset: 3px; }
 
 .joindre { margin: 0 0 2rem; }
 .joindre p { margin: 0 0 0.8rem; }
-.coord { margin: 0; line-height: 1.8; }
+.coord { margin: 0; line-height: 1.7; font-size: 0.97rem; }
+.coord .tel { margin-right: 1.75rem; }
 
 .demande { margin: 0 0 1.75rem; }
 .demande:last-of-type { margin-bottom: 1.5rem; }
@@ -59,7 +60,7 @@ a { color: var(--encre); text-underline-offset: 3px; }
 .ligne > label { margin-bottom: 0; font-size: 0.95rem; }
 .ligne > input { font-size: 1rem; }
 .ligne > .message-erreur { grid-column: 2; }
-.groupe { margin-bottom: 1.75rem; }
+.groupe { margin-bottom: 1.5rem; }
 
 input[type="text"], input[type="tel"], input[type="email"], textarea {
   display: block;
@@ -139,6 +140,9 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
 @media (min-width: 700px) {
   body { padding: 3rem 2rem 4rem; }
   button { width: auto; min-width: 14rem; }
+  .ligne { grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0 1rem; }
+  .ligne > label { font-size: 1rem; }
+  .ligne > input { font-size: 1.1rem; }
 }
 @media (prefers-reduced-motion: reduce) { button { transition: none; } }
 </style>
@@ -157,7 +161,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
 
 <div class="joindre">
 <p>Si vous souhaitez échanger par téléphone avant de vous inscrire sur liste d’attente ou avant un premier rendez-vous, je suis joignable par téléphone tous les lundis de 11&#8239;h à 21&#8239;h. C’est un temps que je réserve aux appels, donc n’hésitez pas à me contacter sur ce créneau si vous en ressentez le besoin. Vous pouvez aussi m’envoyer un mail.</p>
-<p class="coord"><a href="tel:+33762022316">07 62 02 23 16</a><br><a href="mailto:julievasquez.psychologue@gmail.com">julievasquez.psychologue@gmail.com</a></p>
+<p class="coord"><a class="tel" href="tel:+33762022316">07 62 02 23 16</a> <a href="mailto:julievasquez.psychologue@gmail.com">julievasquez.psychologue@gmail.com</a></p>
 </div>
 
 <form id="formulaire" novalidate>
@@ -165,25 +169,25 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
 <div class="groupe">
 
 <div class="ligne champ">
-<label class="bref" for="nom">Nom</label>
+<label for="nom">Nom</label>
 <input type="text" id="nom" name="nom" autocomplete="family-name" required>
 <p class="message-erreur" id="erreur-nom"></p>
 </div>
 
 <div class="ligne champ">
-<label class="bref" for="prenom">Prénom</label>
+<label for="prenom">Prénom</label>
 <input type="text" id="prenom" name="prenom" autocomplete="given-name" required>
 <p class="message-erreur" id="erreur-prenom"></p>
 </div>
 
 <div class="ligne champ">
-<label class="bref" for="telephone">Téléphone</label>
+<label for="telephone">Téléphone</label>
 <input type="tel" id="telephone" name="telephone" autocomplete="tel" required>
 <p class="message-erreur" id="erreur-telephone"></p>
 </div>
 
 <div class="ligne champ">
-<label class="bref" for="email">Mail</label>
+<label for="email">Mail</label>
 <input type="email" id="email" name="email" autocomplete="email" required>
 <p class="message-erreur" id="erreur-email"></p>
 </div>
