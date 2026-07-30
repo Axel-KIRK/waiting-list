@@ -124,7 +124,17 @@ Si le POST échoue (réseau coupé, script indisponible, réponse `ok: false`) :
 
 ## Apparence
 
-Sobre et apaisant. Une colonne centrée à 640px maximum, interligne généreux (1.6+), taille de corps 17–18px, palette douce à faible contraste chromatique, aucune photographie. Mobile-first : la cible principale est un téléphone en 375px de large. Zones de saisie hautes de 44px minimum, labels au-dessus des champs, jamais de placeholder en guise de label.
+Direction retenue après exploration de trois variantes : **« Le cadre »**, un registre clinique tenu avec soin. Aucun serif — le réflexe « psy donc livre » est écarté volontairement. Titre en capitales espacées, corps en sans-serif système, coordonnées en monospace. Blanc pur, encre légèrement bleutée, un seul accent bleu pétrole.
+
+Une colonne centrée à 52rem (832px), interligne 1.55, corps 17px, aucune photographie. Mobile-first : la cible principale est un téléphone en 375px de large. Zones de saisie hautes de 44px minimum, sans boîte — une simple ligne réglée, comme un registre.
+
+Compacité :
+
+- Nom, prénom, téléphone et mail portent leur libellé **sur la même ligne** que la saisie. Au-delà de 700px ils se groupent deux par deux : nom + prénom, puis téléphone + mail. En dessous, les paires s'empilent — quatre zones sur 375px laisseraient environ 60px de saisie par champ.
+- Les zones de texte démarrent à **une seule ligne** et s'étendent à la saisie, sans barre de défilement interne.
+- Aucun titre de section, aucun filet de séparation de bloc : les lignes des champs suffisent à structurer.
+
+Les deux variantes écartées sont documentées dans l'historique git : « L'attente », qui traitait le délai de deux mois comme sujet de la page, et « La parole », qui posait les questions en italique sur des lignes d'écriture.
 
 ## Vérification
 
